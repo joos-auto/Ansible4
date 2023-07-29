@@ -79,4 +79,21 @@ playbookroles.yml
 ```
 ansible-playbook playbookroles.yml
 ```
+**Внешние переменные - extra-vars**
+```yml
+---
+- name: Install Apache and Upload my Web Page
+  hosts: "{{ MYHOSTS }}"
+  become: yes
+
+  roles:
+    - { role: deploy_apache_web, when:ansible_system == 'Linux' }
+```
+Запускаем
+```
+ansible-playbook playbookvars.yml --extra-vars "MYHOSTS=server1"
+ansible-playbook playbookvars.yml --extra-var "MYHOSTS=server1"
+ansible-playbook playbookvars.yml --extra-var "MYHOSTS=server2 owner=DENIS!" # - перепишет owner, так как высший приоритет
+```
+**Использование Import, Include**
 
